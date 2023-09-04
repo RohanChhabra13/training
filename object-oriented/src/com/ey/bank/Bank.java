@@ -11,5 +11,5 @@ public interface Bank {
 	void summary();
 	void deposit(double amount);
 	void witdraw(double amount) throws BalanceException;
-	
+	void statement();
 }

@@ -51,8 +51,9 @@ public class TestAccounts {
 		Bank s1 = AccountsFactory.createSavingsAccount("Ben");
 		try {
 			s1.witdraw(10);
-		} catch (BalanceException e) {
 			
+		} catch (BalanceException e) {
+			s1.statement();
 //			e.printStackTrace(); // Developers troubleshoot the issues ( also mention path and exception type
 //			System.out.println(e); // for logging ; auditing purposes ( also mention exception type)
 			System.out.println(e.getMessage());//End users (only type message)

@@ -1,9 +1,13 @@
 package com.ey.bank;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Accounts implements Bank {
 	private int acntNo;
 	private String holder;
 	protected double balance;
+	protected List<Transactions> txns;
 	//private static int actNoCounter= 10;
 	
 	//Application Constants
@@ -18,6 +22,7 @@ public abstract class Accounts implements Bank {
 		this.acntNo = counter++;
 		this.holder = holder;
 		this.balance = balance;
+		txns = new ArrayList<>();
 	}
 
 	public void summary() {
@@ -29,6 +34,14 @@ public abstract class Accounts implements Bank {
 
 	public void deposit(double amount) {
 		balance += amount;
+		txns.add(new Transactions("CR",amount,balance));
+	}
+
+@Override
+	public void statement() {
+		for (Transactions transactions : txns) {
+			txns.forEach(System.out::println);
+		}
 	}
 
 public abstract void withdraw(double amount);

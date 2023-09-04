@@ -9,7 +9,7 @@ private double overdraft;
 	public Current(String holder) {
 		super(holder, OPENING_CURRENT_BAL);
 		this.overdraft=OVERDRAFT_LIMIT;
-		// TODO Auto-generated constructor stub
+		txns.add(new CurrentTransactions("OB",OPENING_CURRENT_BAL,balance,overdraft));
 	}
 	
 
@@ -19,25 +19,27 @@ private double overdraft;
 		System.out.println("Overdraft: "+overdraft);
 	}
 
-//	@Override
-//	public void deposit(double amount) {
-//		if((OVERDRAFT_LIMIT-overdraft)>=amount ) {
-//			overdraft+=amount;
-//			amount=0;
-//		}
-//		else {
-//			overdraft =OVERDRAFT_LIMIT;
-//			amount-=(OVERDRAFT_LIMIT-overdraft);
-//		}
-//		
-//		balance+=amount;
-//	}
+/*	@Override
+	public void deposit(double amount) {
+		if((OVERDRAFT_LIMIT-overdraft)>=amount ) {
+			overdraft+=amount;
+			amount=0;
+		}
+		else {
+			overdraft =OVERDRAFT_LIMIT;
+			amount-=(OVERDRAFT_LIMIT-overdraft);
+		}
+		
+		balance+=amount;
+	} */
+
 	@Override
 	public void deposit(double amount) {
 		overdraft+=amount;
 		if(overdraft>10000) {
 			balance+=(overdraft-10000);
 			overdraft=10000;
+			txns.add(new CurrentTransactions("CR",amount,balance,overdraft));
 		}
 	}
 
@@ -61,8 +63,9 @@ private double overdraft;
 				overdraft-=balance;
 				balance=0;
 			}
-		}
-		else throw new BalanceException("Insufficient balance!");
+		txns.add(new CurrentTransactions("DR",amount,balance,overdraft));}
+		else 
+			{throw new BalanceException("Insufficient balance!");}
 	}
 
 	@Override
@@ -70,9 +73,8 @@ private double overdraft;
 		// TODO Auto-generated method stub
 		
 	}
-	
 
-	
+
 }
 
 

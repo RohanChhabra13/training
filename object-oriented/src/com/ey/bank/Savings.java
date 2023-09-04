@@ -8,6 +8,7 @@ public class Savings extends Accounts {
 
 	public Savings(String holder) {
 		super(holder, 1000);
+		txns.add(new Transactions("OB",MIN_SAVINGS,balance));
 		
 	}
 
@@ -20,10 +21,11 @@ public class Savings extends Accounts {
 
 	@Override
 	public void witdraw(double amount) throws BalanceException {
-		if(amount<= (balance-1000))
+		if(amount<= (balance-1000)) {
 			balance-=amount;
-		else
-			throw new BalanceException("Insufficient balance!");
+		txns.add(new Transactions("CR",amount,balance));}
+		else {
+			throw new BalanceException("Insufficient balance!");}
 		
 	}
 
